@@ -114,6 +114,7 @@ const Dashboard = () => {
                   }}
                   titles={{ title1: 'Active Ads', title2: 'Non Active Ads' }}
                   heading="Chart of Active/Non Active Ads"
+                  labels={['Active Ads', 'Non Active Ads']}
                 />
               )}
             </Grid>
@@ -127,6 +128,7 @@ const Dashboard = () => {
                   }}
                   titles={{ title1: 'Approved Ads', title2: 'Rejected Ads' }}
                   heading="Chart of Approved/Rejected Ads"
+                  labels={['Approved Ads', 'Rejected Ads']}
                 />
               )}
             </Grid>

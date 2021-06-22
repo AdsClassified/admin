@@ -26,7 +26,7 @@ const TrafficByDevice = props => {
         hoverBorderColor: colors.common.white
       }
     ],
-    labels: ['Desktop', 'Mobile']
+    labels: props.labels
   };
 
   const options = {
@@ -55,14 +55,14 @@ const TrafficByDevice = props => {
     {
       title: props.titles.title1,
       value: props.data.value1,
-      icon: LaptopMacIcon,
+      // icon: LaptopMacIcon,
       color: colors.indigo[500]
     },
 
     {
       title: props.titles.title2,
       value: props.data.value2,
-      icon: PhoneIcon,
+      // icon: PhoneIcon,
       color: colors.orange[600]
     }
   ];
@@ -87,7 +87,7 @@ const TrafficByDevice = props => {
             pt: 2
           }}
         >
-          {devices.map(({ color, icon: Icon, title, value }) => (
+          {devices.map(({ color, title, value }) => (
             <Box
               key={title}
               sx={{
@@ -95,7 +95,7 @@ const TrafficByDevice = props => {
                 textAlign: 'center'
               }}
             >
-              <Icon color="action" />
+              {/* <Icon color="action" /> */}
               <Typography color="textPrimary" variant="body1">
                 {title}
               </Typography>

@@ -16,6 +16,7 @@ import Carousal from '../Carousal';
 import Avatarimage from '../Avatarimage';
 // import { getAd } from "../Connection/Placead";
 import { Link } from 'react-router-dom';
+import Showadmap from './Showadmap';
 
 const useStyles = makeStyles(theme => ({
   appBar: {
@@ -114,7 +115,8 @@ export default function Viewad({ open, handleOpen, data }) {
                     <div>
                       <h2>Location</h2>
                       <br />
-                      <p>MAP WOULD BE THERE</p>
+                      {/* <p>MAP WOULD BE THERE</p> */}
+                      {data.location && <Showadmap data={data.location} />}
                     </div>
                     <br />
                     <br />

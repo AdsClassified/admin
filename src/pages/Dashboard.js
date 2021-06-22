@@ -75,22 +75,32 @@ const Dashboard = () => {
       >
         <Container maxWidth={false}>
           <Grid container spacing={3}>
-            <Grid item lg={3} sm={6} xl={3} xs={12}>
-              {ads && <Budget data={ads} />}
-            </Grid>
+            {ads > 0 && (
+              <Grid item lg={3} sm={6} xl={3} xs={12}>
+                {ads && <Budget data={ads} />}
+              </Grid>
+            )}
+
             <Grid item lg={3} sm={6} xl={3} xs={12}>
               {users && <TotalCustomers data={users.length} />}
             </Grid>
-            <Grid item lg={3} sm={6} xl={3} xs={12}>
-              {featureAdsRequests && (
-                <TasksProgress data={featureAdsRequests} />
-              )}
-            </Grid>
-            <Grid item lg={3} sm={6} xl={3} xs={12}>
-              {featureAds && (
-                <TotalProfit sx={{ height: '100%' }} data={featureAds} />
-              )}
-            </Grid>
+            {featureAdsRequests > 0 && (
+              <Grid item lg={3} sm={6} xl={3} xs={12}>
+                {console.log(featureAdsRequests)}
+                {featureAdsRequests && (
+                  <TasksProgress data={featureAdsRequests} />
+                )}
+              </Grid>
+            )}
+
+            {featureAds > 0 && (
+              <Grid item lg={3} sm={6} xl={3} xs={12}>
+                {featureAds && (
+                  <TotalProfit sx={{ height: '100%' }} data={featureAds} />
+                )}
+              </Grid>
+            )}
+
             {/* <Grid item lg={8} md={12} xl={9} xs={12}>
               <Sales />
             </Grid> */}

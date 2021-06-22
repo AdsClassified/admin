@@ -13,6 +13,7 @@ import InsertChartIcon from '@material-ui/icons/InsertChartOutlined';
 const TasksProgress = props => (
   <Card sx={{ height: '100%' }} {...props}>
     <CardContent>
+      {console.log(props.data)}
       <Grid container spacing={3} sx={{ justifyContent: 'space-between' }}>
         <Grid item>
           <Typography color="textSecondary" gutterBottom variant="h6">

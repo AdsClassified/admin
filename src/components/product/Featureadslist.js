@@ -296,85 +296,89 @@ const Featureadslist = ({
                   <TableCell>Remove From Features</TableCell>
                 </TableRow>
               </TableHead>
-              <TableBody>
-                {ads.map(ad => (
-                  <TableRow
-                    hover
-                    key={ad._id}
-                    selected={selectedCustomerIds.indexOf(ad._id) !== -1}
-                  >
-                    <TableCell padding="checkbox">
-                      <Checkbox
-                        checked={selectedCustomerIds.indexOf(ad._id) !== -1}
-                        onChange={event => handleSelectOne(event, ad._id)}
-                        value="true"
-                      />
-                    </TableCell>
-                    <TableCell>
-                      <Box
-                        sx={{
-                          alignItems: 'center',
-                          display: 'flex'
-                        }}
-                      >
-                        <Avatar src={ad.images[0]} sx={{ mr: 2 }}>
-                          {getInitials(ad.title)}
-                        </Avatar>
-                        <Typography color="textPrimary" variant="body1">
-                          {ad.title}
-                        </Typography>
-                      </Box>
-                    </TableCell>
-                    <TableCell>{ad.price}</TableCell>
-                    <TableCell>{ad.sold ? 'Sold' : 'Not Sold'}</TableCell>
-                    {/* <TableCell>
+              {ads.length > 0 && (
+                <TableBody>
+                  {ads.map(ad => (
+                    <TableRow
+                      hover
+                      key={ad._id}
+                      selected={selectedCustomerIds.indexOf(ad._id) !== -1}
+                    >
+                      <TableCell padding="checkbox">
+                        <Checkbox
+                          checked={selectedCustomerIds.indexOf(ad._id) !== -1}
+                          onChange={event => handleSelectOne(event, ad._id)}
+                          value="true"
+                        />
+                      </TableCell>
+                      <TableCell>
+                        <Box
+                          sx={{
+                            alignItems: 'center',
+                            display: 'flex'
+                          }}
+                        >
+                          <Avatar src={ad.images[0]} sx={{ mr: 2 }}>
+                            {getInitials(ad.title)}
+                          </Avatar>
+                          <Typography color="textPrimary" variant="body1">
+                            {ad.title}
+                          </Typography>
+                        </Box>
+                      </TableCell>
+                      <TableCell>{ad.price}</TableCell>
+                      <TableCell>{ad.sold ? 'Sold' : 'Not Sold'}</TableCell>
+                      {/* <TableCell>
                       {`${ad.address.city}, ${ad.address.state}, ${ad.address.country}`}
                     </TableCell> */}
-                    <TableCell>{ad.categoryName}</TableCell>
-                    <TableCell>{ad.active ? 'Active' : 'Not Active'}</TableCell>
-                    <TableCell>{ad.reviewed ? 'Yes' : 'No'}</TableCell>
-                    <TableCell>
-                      {ad.approved ? 'Approved' : 'Not Approved'}
-                    </TableCell>
-                    <TableCell>
-                      {ad.rejected ? 'Rejected' : 'Not Rejected'}
-                    </TableCell>
-                    <TableCell>{ad.location.address}</TableCell>
-                    <TableCell>{ad.images.length}</TableCell>
-                    <TableCell>{ad.contactDetails.email}</TableCell>
-                    <TableCell>{ad.contactDetails.phone}</TableCell>
-                    <TableCell>{ad.created}</TableCell>
-                    <TableCell>
-                      <button
-                        className="btn  btn-success"
-                        onClick={() => handleViewAd(ad)}
-                      >
-                        View Ad
-                      </button>
-                    </TableCell>
-                    <TableCell>
-                      <button
-                        className="btn btn-primary m-2"
-                        onClick={() => handleEditAd(ad)}
-                      >
-                        Edit <i class="far fa-edit"></i>
-                      </button>
-                    </TableCell>
-                    <TableCell>
-                      <button
-                        className="btn btn-danger m-2"
-                        onClick={() => handleFeature('reject', ad)}
-                      >
-                        <i class="fas fa-times"></i>
-                      </button>
-                    </TableCell>
+                      <TableCell>{ad.categoryName}</TableCell>
+                      <TableCell>
+                        {ad.active ? 'Active' : 'Not Active'}
+                      </TableCell>
+                      <TableCell>{ad.reviewed ? 'Yes' : 'No'}</TableCell>
+                      <TableCell>
+                        {ad.approved ? 'Approved' : 'Not Approved'}
+                      </TableCell>
+                      <TableCell>
+                        {ad.rejected ? 'Rejected' : 'Not Rejected'}
+                      </TableCell>
+                      <TableCell>{ad.location.address}</TableCell>
+                      <TableCell>{ad.images.length}</TableCell>
+                      <TableCell>{ad.contactDetails.email}</TableCell>
+                      <TableCell>{ad.contactDetails.phone}</TableCell>
+                      <TableCell>{ad.created}</TableCell>
+                      <TableCell>
+                        <button
+                          className="btn  btn-success"
+                          onClick={() => handleViewAd(ad)}
+                        >
+                          View Ad
+                        </button>
+                      </TableCell>
+                      <TableCell>
+                        <button
+                          className="btn btn-primary m-2"
+                          onClick={() => handleEditAd(ad)}
+                        >
+                          Edit <i class="far fa-edit"></i>
+                        </button>
+                      </TableCell>
+                      <TableCell>
+                        <button
+                          className="btn btn-danger m-2"
+                          onClick={() => handleFeature('reject', ad)}
+                        >
+                          <i class="fas fa-times"></i>
+                        </button>
+                      </TableCell>
 
-                    {/* <TableCell>
+                      {/* <TableCell>
                       {moment(ad.createdAt).format('DD/MM/YYYY')}
                     </TableCell> */}
-                  </TableRow>
-                ))}
-              </TableBody>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              )}
             </Table>
           </Box>
         </PerfectScrollbar>
@@ -388,6 +392,36 @@ const Featureadslist = ({
           rowsPerPageOptions={[5, 10, 25]}
         /> */}
       </Card>
+      {ads.length === 0 && (
+        <div className="container text-center">
+          <div
+            className="p-5 row "
+            style={{
+              border: '1px solid #F4F6F7'
+            }}
+          >
+            <div className="col-12">
+              {ads.length === 0 && (
+                <div>
+                  <i style={{ fontSize: '35px' }} class="fas fa-box-open"></i>
+                  <br />
+                  You Have no Ads Online
+                  <br />
+                  {/* <Link to="/placead">
+                        <button
+                          className="btn mt-3 "
+                          style={{ color: "white", backgroundColor: "#FF6E14" }}
+                        >
+                          <i class="far fa-plus-square mr-2"></i>
+                          Place an ad
+                        </button>
+                      </Link> */}
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
       {email && (
         <Emaildialog
           open={openEmail}

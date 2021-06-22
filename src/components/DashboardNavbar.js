@@ -35,7 +35,7 @@ const DashboardNavbar = ({ onMobileNavOpen, ...rest }) => {
   return (
     <AppBar elevation={0} {...rest}>
       <Toolbar>
-        <RouterLink to="/">
+        <RouterLink to="/app">
           {/* <Logo /> */}
           <img style={{ width: '175px' }} className="img-fluid" src={Logo} />
         </RouterLink>

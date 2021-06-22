@@ -27,6 +27,7 @@ import { emailSend } from '../../Connection/Ads';
 import { ToastContainer, toast } from 'react-toastify';
 import Viewad from './Viewad';
 import Editad from './Editad';
+import Loader from '../Loader';
 
 const Adslist = ({
   handleDelete,
@@ -185,173 +186,179 @@ const Adslist = ({
 
   return (
     <div>
-      {console.log(selectedCustomerIds)}
+      <div>
+        {console.log(selectedCustomerIds)}
 
-      <div className="d-flex justify-content-end">
-        <button
-          className="btn btn-success m-2"
-          disabled={selectedCustomerIds.length === 1 ? false : true}
-          onClick={handleOpenEmail}
-        >
-          Send Email <i class="far fa-paper-plane"></i>
-        </button>
-        <button
-          className="btn btn-danger m-2"
-          disabled={selectedCustomerIds.length > 0 ? false : true}
-          onClick={handleRejectAds}
-        >
-          Reject <i class="fas fa-times"></i>
-        </button>
-        <button
-          className="btn btn-warning m-2"
-          disabled={selectedCustomerIds.length > 0 ? false : true}
-          onClick={handleApproveAds}
-        >
-          Approve <i class="fas fa-check"></i>
-        </button>
-        <button
-          className="btn btn-danger m-2"
-          disabled={
-            selectedCustomerIds.length === 1 && checkValid() ? false : true
-          }
-          onClick={handleDeActiveAds}
-        >
-          De Active <i class="fas fa-times"></i>
-        </button>
+        <div className="d-flex justify-content-end">
+          <button
+            className="btn btn-success m-2"
+            disabled={selectedCustomerIds.length === 1 ? false : true}
+            onClick={handleOpenEmail}
+          >
+            Send Email <i class="far fa-paper-plane"></i>
+          </button>
+          <button
+            className="btn btn-danger m-2"
+            disabled={selectedCustomerIds.length > 0 ? false : true}
+            onClick={handleRejectAds}
+          >
+            Reject <i class="fas fa-times"></i>
+          </button>
+          <button
+            className="btn btn-warning m-2"
+            disabled={selectedCustomerIds.length > 0 ? false : true}
+            onClick={handleApproveAds}
+          >
+            Approve <i class="fas fa-check"></i>
+          </button>
+          <button
+            className="btn btn-danger m-2"
+            disabled={
+              selectedCustomerIds.length === 1 && checkValid() ? false : true
+            }
+            onClick={handleDeActiveAds}
+          >
+            De Active <i class="fas fa-times"></i>
+          </button>
 
-        <button
-          className="btn btn-success m-2"
-          disabled={
-            selectedCustomerIds.length === 1 && checkValid() ? false : true
-          }
-          onClick={handleActiveAds}
-        >
-          Active <i class="fas fa-check"></i>
-        </button>
-        <button
-          className="btn btn-danger m-2"
-          disabled={selectedCustomerIds.length > 0 ? false : true}
-          onClick={handleDeleteUsers}
-        >
-          Delete <i class="far fa-trash-alt"></i>
-        </button>
-        {/* <button
+          <button
+            className="btn btn-success m-2"
+            disabled={
+              selectedCustomerIds.length === 1 && checkValid() ? false : true
+            }
+            onClick={handleActiveAds}
+          >
+            Active <i class="fas fa-check"></i>
+          </button>
+          <button
+            className="btn btn-danger m-2"
+            disabled={selectedCustomerIds.length > 0 ? false : true}
+            onClick={handleDeleteUsers}
+          >
+            Delete <i class="far fa-trash-alt"></i>
+          </button>
+          {/* <button
           className="btn btn-primary m-2"
           disabled={selectedCustomerIds.length === 1 ? false : true}
           onClick={handleEditUser}
         >
           Edit <i class="far fa-edit"></i>
         </button> */}
-      </div>
-      <Card {...rest}>
-        <PerfectScrollbar>
-          <Box sx={{ minWidth: 1050 }}>
-            <Table>
-              <TableHead>
-                <TableRow>
-                  <TableCell padding="checkbox">
-                    <Checkbox
-                      checked={selectedCustomerIds.length === ads.length}
-                      color="primary"
-                      indeterminate={
-                        selectedCustomerIds.length > 0 &&
-                        selectedCustomerIds.length < ads.length
-                      }
-                      onChange={handleSelectAll}
-                    />
-                  </TableCell>
-                  <TableCell>Title</TableCell>
-                  <TableCell>Price</TableCell>
-                  <TableCell>Sold</TableCell>
-                  <TableCell>Category</TableCell>
-                  <TableCell>Ad Active Status</TableCell>
-                  <TableCell>Ad Reviewed</TableCell>
-                  <TableCell>Ad Approved </TableCell>
-                  <TableCell>Ad Rejected</TableCell>
-                  <TableCell>location</TableCell>
-                  <TableCell>images</TableCell>
-                  <TableCell>Contact Email</TableCell>
-                  <TableCell>Contact Phone</TableCell>
-                  <TableCell>Created At</TableCell>
-                  <TableCell>View Ad</TableCell>
-                  <TableCell>Edit Ad</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {ads.map(ad => (
-                  <TableRow
-                    hover
-                    key={ad._id}
-                    selected={selectedCustomerIds.indexOf(ad._id) !== -1}
-                  >
+        </div>
+        <Card {...rest}>
+          <PerfectScrollbar>
+            <Box sx={{ minWidth: 1050 }}>
+              <Table>
+                <TableHead>
+                  <TableRow>
                     <TableCell padding="checkbox">
                       <Checkbox
-                        checked={selectedCustomerIds.indexOf(ad._id) !== -1}
-                        onChange={event => handleSelectOne(event, ad._id)}
-                        value="true"
+                        checked={selectedCustomerIds.length === ads.length}
+                        color="primary"
+                        indeterminate={
+                          selectedCustomerIds.length > 0 &&
+                          selectedCustomerIds.length < ads.length
+                        }
+                        onChange={handleSelectAll}
                       />
                     </TableCell>
-                    <TableCell>
-                      <Box
-                        sx={{
-                          alignItems: 'center',
-                          display: 'flex'
-                        }}
+                    <TableCell>Title</TableCell>
+                    <TableCell>Price</TableCell>
+                    <TableCell>Sold</TableCell>
+                    <TableCell>Category</TableCell>
+                    <TableCell>Ad Active Status</TableCell>
+                    <TableCell>Ad Reviewed</TableCell>
+                    <TableCell>Ad Approved </TableCell>
+                    <TableCell>Ad Rejected</TableCell>
+                    <TableCell>location</TableCell>
+                    <TableCell>images</TableCell>
+                    <TableCell>Contact Email</TableCell>
+                    <TableCell>Contact Phone</TableCell>
+                    <TableCell>Created At</TableCell>
+                    <TableCell>View Ad</TableCell>
+                    <TableCell>Edit Ad</TableCell>
+                  </TableRow>
+                </TableHead>
+                {ads.length > 0 && (
+                  <TableBody>
+                    {ads.map(ad => (
+                      <TableRow
+                        hover
+                        key={ad._id}
+                        selected={selectedCustomerIds.indexOf(ad._id) !== -1}
                       >
-                        <Avatar src={ad.images[0]} sx={{ mr: 2 }}>
-                          {getInitials(ad.title)}
-                        </Avatar>
-                        <Typography color="textPrimary" variant="body1">
-                          {ad.title}
-                        </Typography>
-                      </Box>
-                    </TableCell>
-                    <TableCell>{ad.price}</TableCell>
-                    <TableCell>{ad.sold ? 'Sold' : 'Not Sold'}</TableCell>
-                    {/* <TableCell>
+                        <TableCell padding="checkbox">
+                          <Checkbox
+                            checked={selectedCustomerIds.indexOf(ad._id) !== -1}
+                            onChange={event => handleSelectOne(event, ad._id)}
+                            value="true"
+                          />
+                        </TableCell>
+                        <TableCell>
+                          <Box
+                            sx={{
+                              alignItems: 'center',
+                              display: 'flex'
+                            }}
+                          >
+                            <Avatar src={ad.images[0]} sx={{ mr: 2 }}>
+                              {getInitials(ad.title)}
+                            </Avatar>
+                            <Typography color="textPrimary" variant="body1">
+                              {ad.title}
+                            </Typography>
+                          </Box>
+                        </TableCell>
+                        <TableCell>{ad.price}</TableCell>
+                        <TableCell>{ad.sold ? 'Sold' : 'Not Sold'}</TableCell>
+                        {/* <TableCell>
                       {`${ad.address.city}, ${ad.address.state}, ${ad.address.country}`}
                     </TableCell> */}
-                    <TableCell>{ad.categoryName}</TableCell>
-                    <TableCell>{ad.active ? 'Active' : 'Not Active'}</TableCell>
-                    <TableCell>{ad.reviewed ? 'Yes' : 'No'}</TableCell>
-                    <TableCell>
-                      {ad.approved ? 'Approved' : 'Not Approved'}
-                    </TableCell>
-                    <TableCell>
-                      {ad.rejected ? 'Rejected' : 'Not Rejected'}
-                    </TableCell>
-                    <TableCell>{ad.location.address}</TableCell>
-                    <TableCell>{ad.images.length}</TableCell>
-                    <TableCell>{ad.contactDetails.email}</TableCell>
-                    <TableCell>{ad.contactDetails.phone}</TableCell>
-                    <TableCell>{ad.created}</TableCell>
-                    <TableCell>
-                      <button
-                        className="btn  btn-success"
-                        onClick={() => handleViewAd(ad)}
-                      >
-                        View Ad
-                      </button>
-                    </TableCell>
-                    <TableCell>
-                      <button
-                        className="btn btn-primary m-2"
-                        onClick={() => handleEditAd(ad)}
-                      >
-                        Edit <i class="far fa-edit"></i>
-                      </button>
-                    </TableCell>
+                        <TableCell>{ad.categoryName}</TableCell>
+                        <TableCell>
+                          {ad.active ? 'Active' : 'Not Active'}
+                        </TableCell>
+                        <TableCell>{ad.reviewed ? 'Yes' : 'No'}</TableCell>
+                        <TableCell>
+                          {ad.approved ? 'Approved' : 'Not Approved'}
+                        </TableCell>
+                        <TableCell>
+                          {ad.rejected ? 'Rejected' : 'Not Rejected'}
+                        </TableCell>
+                        <TableCell>{ad.location.address}</TableCell>
+                        <TableCell>{ad.images.length}</TableCell>
+                        <TableCell>{ad.contactDetails.email}</TableCell>
+                        <TableCell>{ad.contactDetails.phone}</TableCell>
+                        <TableCell>{ad.created}</TableCell>
+                        <TableCell>
+                          <button
+                            className="btn  btn-success"
+                            onClick={() => handleViewAd(ad)}
+                          >
+                            View Ad
+                          </button>
+                        </TableCell>
+                        <TableCell>
+                          <button
+                            className="btn btn-primary m-2"
+                            onClick={() => handleEditAd(ad)}
+                          >
+                            Edit <i class="far fa-edit"></i>
+                          </button>
+                        </TableCell>
 
-                    {/* <TableCell>
+                        {/* <TableCell>
                       {moment(ad.createdAt).format('DD/MM/YYYY')}
                     </TableCell> */}
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </Box>
-        </PerfectScrollbar>
-        {/* <TablePagination
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                )}
+              </Table>
+              {/* <Loader /> */}
+            </Box>
+          </PerfectScrollbar>
+          {/* <TablePagination
           component="div"
           count={ads.length}
           onPageChange={handlePageChange}
@@ -360,27 +367,62 @@ const Adslist = ({
           rowsPerPage={limit}
           rowsPerPageOptions={[5, 10, 25]}
         /> */}
-      </Card>
-      {email && (
-        <Emaildialog
-          open={openEmail}
-          handleOpen={handleOpenEmail}
-          handleEmailSend={handleEmailSend}
-          email={email}
-        />
-      )}
-      {adData && (
-        <Viewad data={adData} open={openViewAd} handleOpen={handleOpenViewAd} />
-      )}
+        </Card>
+        {ads.length === 0 && (
+          <div className="container text-center">
+            <div
+              className="p-5 row "
+              style={{
+                border: '1px solid #F4F6F7'
+              }}
+            >
+              <div className="col-12">
+                {ads.length === 0 && (
+                  <div>
+                    <i style={{ fontSize: '35px' }} class="fas fa-box-open"></i>
+                    <br />
+                    You Have no Ads Online
+                    <br />
+                    {/* <Link to="/placead">
+                        <button
+                          className="btn mt-3 "
+                          style={{ color: "white", backgroundColor: "#FF6E14" }}
+                        >
+                          <i class="far fa-plus-square mr-2"></i>
+                          Place an ad
+                        </button>
+                      </Link> */}
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        )}
+        {email && (
+          <Emaildialog
+            open={openEmail}
+            handleOpen={handleOpenEmail}
+            handleEmailSend={handleEmailSend}
+            email={email}
+          />
+        )}
+        {adData && (
+          <Viewad
+            data={adData}
+            open={openViewAd}
+            handleOpen={handleOpenViewAd}
+          />
+        )}
 
-      {editAdData && (
-        <Editad
-          data={editAdData}
-          open={openEditAd}
-          handleOpen={handleOpenEditAd}
-          handleUpdate={handleUpdate}
-        />
-      )}
+        {editAdData && (
+          <Editad
+            data={editAdData}
+            open={openEditAd}
+            handleOpen={handleOpenEditAd}
+            handleUpdate={handleUpdate}
+          />
+        )}
+      </div>
     </div>
   );
 };

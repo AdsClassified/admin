@@ -195,57 +195,65 @@ const CustomerListResults = ({
                   <TableCell>Block</TableCell>
                 </TableRow>
               </TableHead>
-              <TableBody>
-                {customers.map(customer => (
-                  <TableRow
-                    hover
-                    key={customer._id}
-                    selected={selectedCustomerIds.indexOf(customer._id) !== -1}
-                  >
-                    <TableCell padding="checkbox">
-                      <Checkbox
-                        checked={
-                          selectedCustomerIds.indexOf(customer._id) !== -1
-                        }
-                        onChange={event => handleSelectOne(event, customer._id)}
-                        value="true"
-                      />
-                    </TableCell>
-                    <TableCell>
-                      <Box
-                        sx={{
-                          alignItems: 'center',
-                          display: 'flex'
-                        }}
-                      >
-                        <Avatar src={customer.profileImage} sx={{ mr: 2 }}>
-                          {getInitials(customer.username)}
-                        </Avatar>
-                        <Typography color="textPrimary" variant="body1">
-                          {customer.username}
-                        </Typography>
-                      </Box>
-                    </TableCell>
-                    <TableCell>{customer.email}</TableCell>
-                    {/* <TableCell>
+              {customers.length === 0 ? (
+                <div>No User Found</div>
+              ) : (
+                <TableBody>
+                  {customers.map(customer => (
+                    <TableRow
+                      hover
+                      key={customer._id}
+                      selected={
+                        selectedCustomerIds.indexOf(customer._id) !== -1
+                      }
+                    >
+                      <TableCell padding="checkbox">
+                        <Checkbox
+                          checked={
+                            selectedCustomerIds.indexOf(customer._id) !== -1
+                          }
+                          onChange={event =>
+                            handleSelectOne(event, customer._id)
+                          }
+                          value="true"
+                        />
+                      </TableCell>
+                      <TableCell>
+                        <Box
+                          sx={{
+                            alignItems: 'center',
+                            display: 'flex'
+                          }}
+                        >
+                          <Avatar src={customer.profileImage} sx={{ mr: 2 }}>
+                            {getInitials(customer.username)}
+                          </Avatar>
+                          <Typography color="textPrimary" variant="body1">
+                            {customer.username}
+                          </Typography>
+                        </Box>
+                      </TableCell>
+                      <TableCell>{customer.email}</TableCell>
+                      {/* <TableCell>
                       {`${customer.address.city}, ${customer.address.state}, ${customer.address.country}`}
                     </TableCell> */}
-                    <TableCell>{customer.phone}</TableCell>
-                    <TableCell>
-                      {customer.emailVerified ? 'Verified' : 'Not Verified'}
-                    </TableCell>
-                    <TableCell>
-                      {customer.phoneVerified ? 'Verified' : 'Not Verified'}
-                    </TableCell>
-                    <TableCell>
-                      {customer.block ? 'Blocked' : 'Not Blocked'}
-                    </TableCell>
-                    {/* <TableCell>
+                      <TableCell>{customer.phone}</TableCell>
+                      <TableCell>
+                        {customer.emailVerified ? 'Verified' : 'Not Verified'}
+                      </TableCell>
+                      <TableCell>
+                        {customer.phoneVerified ? 'Verified' : 'Not Verified'}
+                      </TableCell>
+                      <TableCell>
+                        {customer.block ? 'Blocked' : 'Not Blocked'}
+                      </TableCell>
+                      {/* <TableCell>
                       {moment(customer.createdAt).format('DD/MM/YYYY')}
                     </TableCell> */}
-                  </TableRow>
-                ))}
-              </TableBody>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              )}
             </Table>
           </Box>
         </PerfectScrollbar>

@@ -72,6 +72,13 @@ const getFeatureAdsRequests = async () => {
   return res;
 };
 
+const getAdsApproval = async () => {
+  // console.log(data);
+  let res = await axios.get(`${url}/api/placead/getadsapproval`);
+  console.log(res);
+  return res;
+};
+
 const getFeatureAds = async data => {
   let res = await axios.get(`${url}/api/placead/getfeatureads`);
   console.log(res);
@@ -141,5 +148,6 @@ export {
   countFeatureAdsRequests,
   countFeatureAds,
   adsStats,
-  deleteFeatureAds
+  deleteFeatureAds,
+  getAdsApproval
 };

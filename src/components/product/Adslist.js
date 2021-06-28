@@ -134,18 +134,21 @@ const Adslist = ({
   };
 
   const checkValid = () => {
+    console.log(ads);
     let yoo = ads.filter(ad => {
       return ad._id === selectedCustomerIds[0];
     });
 
     console.log(yoo);
 
-    if (yoo[0].reviewed === true && yoo[0].approved === true) {
-      console.log('Trueeee');
-      return true;
-    } else {
-      console.log('false');
-      return false;
+    if (yoo.length > 0) {
+      if (yoo[0].reviewed === true && yoo[0].approved === true) {
+        console.log('Trueeee');
+        return true;
+      } else {
+        console.log('false');
+        return false;
+      }
     }
   };
 
@@ -187,7 +190,7 @@ const Adslist = ({
   return (
     <div>
       <div>
-        {console.log(selectedCustomerIds)}
+        {console.log(ads)}
 
         <div className="d-flex justify-content-end">
           <button

@@ -140,12 +140,14 @@ const Featureadslist = ({
 
     console.log(yoo);
 
-    if (yoo[0].reviewed === true && yoo[0].approved === true) {
-      console.log('Trueeee');
-      return true;
-    } else {
-      console.log('false');
-      return false;
+    if (yoo.length > 0) {
+      if (yoo[0].reviewed === true && yoo[0].approved === true) {
+        console.log('Trueeee');
+        return true;
+      } else {
+        console.log('false');
+        return false;
+      }
     }
   };
 

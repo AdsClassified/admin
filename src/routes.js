@@ -12,6 +12,7 @@ import Featureads from 'src/pages/Featureads';
 import Register from 'src/pages/Register';
 import Settings from 'src/pages/Settings';
 import Categories from './pages/Categories';
+import Adsapproval from './pages/Adsapproval';
 
 export const Authroutes = [
   {
@@ -21,6 +22,7 @@ export const Authroutes = [
       { path: 'account', element: <Account /> },
       { path: 'users', element: <CustomerList /> },
       { path: 'dashboard', element: <Dashboard /> },
+      { path: 'adsapproval', element: <Adsapproval /> },
       { path: 'ads', element: <ProductList /> },
       { path: 'featureadsrequests', element: <Featureadsrequests /> },
       { path: 'featureads', element: <Featureads /> },

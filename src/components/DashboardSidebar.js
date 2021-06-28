@@ -42,6 +42,11 @@ const items = [
     title: 'users'
   },
   {
+    href: '/app/adsapproval',
+    icon: ShoppingBagIcon,
+    title: 'Ads Approval Requests'
+  },
+  {
     href: '/app/ads',
     icon: ShoppingBagIcon,
     title: 'Ads'
@@ -60,12 +65,12 @@ const items = [
     href: '/app/categories',
     icon: ListIcon,
     title: 'Manage Categories'
-  },
-  {
-    href: '/app/settings',
-    icon: SettingsIcon,
-    title: 'Settings'
   }
+  // {
+  //   href: '/app/settings',
+  //   icon: SettingsIcon,
+  //   title: 'Settings'
+  // }
   // {
   //   href: '/login',
   //   icon: LockIcon,

@@ -7,6 +7,8 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { values } from 'lodash-es';
+import Imagepicker from '../Imagepicker';
+import Avatarimage from '../Avatarimage';
 
 export default function Addcategory({ open, handleOpen, handleSubmit }) {
   //   const [open, setOpen] = React.useState(false);
@@ -33,6 +35,36 @@ export default function Addcategory({ open, handleOpen, handleSubmit }) {
       ...values,
       [name]: value
     });
+  };
+
+  const handleSelectedImage = async image => {
+    console.log(image);
+
+    setValues({
+      ...values,
+      image: image
+    });
+
+    // setUserData({ ...userData, image: image });
+    // // window.localStorage.setItem("image", image);
+
+    // let res = await updateImage({
+    //   image,
+    //   userId: window.localStorage.getItem("id"),
+    // });
+
+    // if (res.data.success === true) {
+    //   console.log("hello i am working");
+    //   // console.log(userData.image);
+    //   window.localStorage.setItem("image", image);
+    //   toast.success(res.data.message, {
+    //     position: toast.POSITION.TOP_RIGHT,
+    //   });
+    // } else {
+    //   toast.error(res.data.message, {
+    //     position: toast.POSITION.TOP_RIGHT,
+    //   });
+    // }
   };
 
   const handleSubmitCategory = () => {
@@ -100,7 +132,8 @@ export default function Addcategory({ open, handleOpen, handleSubmit }) {
             type="text"
             fullWidth
           />
-          <TextField
+          <br />
+          {/* <TextField
             autoFocus
             margin="dense"
             id="name"
@@ -111,7 +144,23 @@ export default function Addcategory({ open, handleOpen, handleSubmit }) {
             placeholder="Only Add Online Link for the Image"
             type="text"
             fullWidth
-          />
+          /> */}
+          {/* <Avatarimage image={values.image} /> */}
+          <div>
+            <br />
+            {values.image && (
+              <img
+                src={values.image}
+                style={{
+                  width: '100px',
+                  height: '100px',
+                  borderRadius: '12px'
+                }}
+              />
+            )}
+          </div>
+          <br />
+          <Imagepicker selectedImages={handleSelectedImage} />
         </DialogContent>
         <DialogActions>
           <Button onClick={handleOpen} color="primary">

@@ -99,13 +99,13 @@ const CustomerListResults = ({
       return {
         email: customer.email,
         phone: customer.phone.toString(),
-        location: customer.location,
+        location: customer.location ? customer.location.address : '',
         phoneVerified:
           customer.phoneVerified === true ? 'Verified' : 'Not Verified',
         emailVerified:
           customer.emailVerified === true ? 'Verified' : 'Not Verified',
         block: customer.block === true ? 'Blocked' : 'Not Blocked',
-        favourites: customer.favourites
+        favourites: customer.favourites ? customer.favourites.length : ''
       };
     });
     console.log(yoo);
@@ -189,7 +189,7 @@ const CustomerListResults = ({
                   <TableCell>Email</TableCell>
                   {/* <TableCell>Location</TableCell> */}
                   <TableCell>Phone</TableCell>
-
+                  <TableCell>location</TableCell>
                   <TableCell>Email Verified</TableCell>
                   <TableCell>Phone Verified</TableCell>
                   <TableCell>Block</TableCell>
@@ -234,10 +234,14 @@ const CustomerListResults = ({
                         </Box>
                       </TableCell>
                       <TableCell>{customer.email}</TableCell>
+
                       {/* <TableCell>
                       {`${customer.address.city}, ${customer.address.state}, ${customer.address.country}`}
                     </TableCell> */}
                       <TableCell>{customer.phone}</TableCell>
+                      <TableCell>
+                        {customer.location ? customer.location.address : ''}
+                      </TableCell>
                       <TableCell>
                         {customer.emailVerified ? 'Verified' : 'Not Verified'}
                       </TableCell>

@@ -30,6 +30,7 @@ import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import Featureadsrequestslist from '../components/product/Featureadsrequestslist';
+import Loader from '../components/Loader';
 
 const useStyles = makeStyles(theme => ({
   formControl: {
@@ -51,6 +52,7 @@ const Adsapproval = () => {
   const [searchValue, setSearchValue] = useState('');
   const [filter, setFilter] = useState('');
   const [filterAds, setFilterAds] = useState('');
+  const [loading, setLoading] = useState(true);
 
   const handleUpdate = ids => {
     let yoo = ads.filter(ad => !ids.includes(ad._id));
@@ -206,6 +208,7 @@ const Adsapproval = () => {
       console.log(res);
       setAds(res.data.ads);
       setFilterAds(res.data.ads);
+      setLoading(false);
     };
     fetchAds();
     setUpdate(false);
@@ -215,88 +218,96 @@ const Adsapproval = () => {
       <Helmet>
         <title>Ads | Material Kit</title>
       </Helmet>
-      <Box
-        sx={{
-          backgroundColor: 'background.default',
-          minHeight: '100%',
-          py: 3
-        }}
-      >
-        <Container maxWidth={false}>
-          <ProductListToolbar />
-          <div>
-            <Box sx={{ mt: 3 }}>
-              <Card>
-                <CardContent>
-                  <Box
-                    className="d-flex justify-content-between"
-                    sx={{ maxWidth: 950 }}
-                  >
-                    <TextField
-                      fullWidth
-                      InputProps={{
-                        startAdornment: (
-                          <InputAdornment position="start">
-                            <SvgIcon fontSize="small" color="action">
-                              <SearchIcon />
-                            </SvgIcon>
-                          </InputAdornment>
-                        )
-                      }}
-                      placeholder="Search product"
-                      variant="outlined"
-                      className="mx-2"
-                      name="search"
-                      value={searchValue}
-                      onChange={handleSearchChange}
-                    />
-                    <FormControl
-                      variant="outlined"
-                      className={classes.formControl}
-                    >
-                      <InputLabel htmlFor="outlined-age-native-simple">
-                        Filters
-                      </InputLabel>
-                      <Select
-                        native
-                        value={filter}
-                        onChange={handleFilterChange}
-                        label="Filter"
-                        // inputProps={{
-                        //   name: 'age',
-                        //   id: 'outlined-age-native-simple'
-                        // }}
+      {loading === true ? (
+        <div className="d-flex h-100 justify-content-center align-items-center">
+          <Loader />
+        </div>
+      ) : (
+        <Box
+          sx={{
+            backgroundColor: 'background.default',
+            minHeight: '100%',
+            py: 3
+          }}
+        >
+          <Container maxWidth={false}>
+            <ProductListToolbar />
+            <div>
+              {ads.length > 0 ? (
+                <Box sx={{ mt: 3 }}>
+                  <Card>
+                    <CardContent>
+                      <Box
+                        className="d-flex justify-content-between"
+                        sx={{ maxWidth: 950 }}
                       >
-                        <option value={filter}>{filter}</option>
-                        <option value="All">All</option>
-                        <option value="Approved">Approved</option>
-                        <option value="Rejected">Rejected</option>
-                        <option value="Active">Active</option>
-                        <option value="De Active">De Active</option>
-                        <option value="Sold">Sold</option>
-                      </Select>
-                    </FormControl>
-                  </Box>
-                </CardContent>
-              </Card>
+                        <TextField
+                          fullWidth
+                          InputProps={{
+                            startAdornment: (
+                              <InputAdornment position="start">
+                                <SvgIcon fontSize="small" color="action">
+                                  <SearchIcon />
+                                </SvgIcon>
+                              </InputAdornment>
+                            )
+                          }}
+                          placeholder="Search product"
+                          variant="outlined"
+                          className="mx-2"
+                          name="search"
+                          value={searchValue}
+                          onChange={handleSearchChange}
+                        />
+                        <FormControl
+                          variant="outlined"
+                          className={classes.formControl}
+                        >
+                          <InputLabel htmlFor="outlined-age-native-simple">
+                            Filters
+                          </InputLabel>
+                          <Select
+                            native
+                            value={filter}
+                            onChange={handleFilterChange}
+                            label="Filter"
+                            // inputProps={{
+                            //   name: 'age',
+                            //   id: 'outlined-age-native-simple'
+                            // }}
+                          >
+                            <option value={filter}>{filter}</option>
+                            <option value="All">All</option>
+                            <option value="Approved">Approved</option>
+                            <option value="Rejected">Rejected</option>
+                            <option value="Active">Active</option>
+                            <option value="De Active">De Active</option>
+                            <option value="Sold">Sold</option>
+                          </Select>
+                        </FormControl>
+                      </Box>
+                    </CardContent>
+                  </Card>
+                </Box>
+              ) : null}
+            </div>
+            <Box sx={{ pt: 3 }}>
+              {ads && (
+                <Adslist
+                  ads={searchValue.length > 0 ? search : ads}
+                  handleDelete={handleDelete}
+                  handleEdit={handleOpenEditUser}
+                  handleReject={handleReject}
+                  handleApprove={handleApprove}
+                  handleActive={handleActive}
+                  handleDeActive={handleDeActive}
+                  handleUpdate={handleUpdateData}
+                />
+              )}
             </Box>
-          </div>
-          <Box sx={{ pt: 3 }}>
-            {ads && (
-              <Adslist
-                ads={searchValue.length > 0 ? search : ads}
-                handleDelete={handleDelete}
-                handleEdit={handleOpenEditUser}
-                handleReject={handleReject}
-                handleApprove={handleApprove}
-                handleActive={handleActive}
-                handleDeActive={handleDeActive}
-                handleUpdate={handleUpdateData}
-              />
-            )}
-          </Box>
-        </Container>
-      </Box>
+          </Container>
+        </Box>
+      )}
     </>
   );
 };

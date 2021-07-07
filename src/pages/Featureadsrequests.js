@@ -89,9 +89,9 @@ const FeatureadsRequests = () => {
     setOpenEditUser(!openEditUser);
   };
 
-  const handleReject = async ids => {
+  const handleReject = async (ids, emails) => {
     console.log(ids);
-    let res = await rejectAds({ ids: ids });
+    let res = await rejectAds({ ids: ids, emails: emails });
     console.log(res);
     if (res.data.success === true) {
       toast.success(res.data.message, {
@@ -105,9 +105,9 @@ const FeatureadsRequests = () => {
     }
   };
 
-  const handleApprove = async ids => {
+  const handleApprove = async (ids, emails) => {
     console.log(ids);
-    let res = await approveAds({ ids: ids });
+    let res = await approveAds({ ids: ids, emails: emails });
     console.log(res);
     if (res.data.success === true) {
       toast.success(res.data.message, {
@@ -121,9 +121,9 @@ const FeatureadsRequests = () => {
     }
   };
 
-  const handleActive = async ids => {
+  const handleActive = async (ids, emails) => {
     console.log(ids);
-    let res = await activeAds({ id: ids[0] });
+    let res = await activeAds({ id: ids[0], emails: emails });
     console.log(res);
     if (res.data.success === true) {
       toast.success(res.data.message, {
@@ -137,9 +137,9 @@ const FeatureadsRequests = () => {
     }
   };
 
-  const handleDeActive = async ids => {
+  const handleDeActive = async (ids, emails) => {
     console.log(ids);
-    let res = await deActiveAds({ id: ids[0] });
+    let res = await deActiveAds({ id: ids[0], emails: emails });
     console.log(res);
     if (res.data.success === true) {
       toast.success(res.data.message, {

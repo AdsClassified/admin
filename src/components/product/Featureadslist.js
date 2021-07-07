@@ -50,6 +50,7 @@ const Featureadslist = ({
   const [editAdData, setEditAdData] = useState();
   const [openEditAd, setOpenEditAd] = useState(false);
   const [openViewAd, setOpenViewAd] = useState(false);
+  const [emails, setEmails] = useState([]);
 
   const handleSelectAll = event => {
     let newSelectedCustomerIds;
@@ -63,8 +64,11 @@ const Featureadslist = ({
     setSelectedCustomerIds(newSelectedCustomerIds);
   };
 
-  const handleSelectOne = (event, id) => {
+  const handleSelectOne = (event, id, email) => {
+    console.log(email);
     const selectedIndex = selectedCustomerIds.indexOf(id);
+    console.log(selectedIndex);
+
     let newSelectedCustomerIds = [];
 
     if (selectedIndex === -1) {
@@ -72,6 +76,7 @@ const Featureadslist = ({
         selectedCustomerIds,
         id
       );
+      setEmails([...emails, email]);
     } else if (selectedIndex === 0) {
       newSelectedCustomerIds = newSelectedCustomerIds.concat(
         selectedCustomerIds.slice(1)
@@ -85,6 +90,15 @@ const Featureadslist = ({
         selectedCustomerIds.slice(0, selectedIndex),
         selectedCustomerIds.slice(selectedIndex + 1)
       );
+    }
+
+    if (selectedIndex !== -1) {
+      console.log(selectedIndex);
+      console.log(email);
+      let yoo = emails;
+      yoo.splice(selectedIndex, 1);
+      console.log(yoo);
+      setEmails(yoo);
     }
 
     setSelectedCustomerIds(newSelectedCustomerIds);
@@ -107,19 +121,19 @@ const Featureadslist = ({
   // };
 
   const handleActiveAds = () => {
-    handleActive(selectedCustomerIds);
+    handleActive(selectedCustomerIds, emails);
   };
 
   const handleDeActiveAds = () => {
-    handleDeActive(selectedCustomerIds);
+    handleDeActive(selectedCustomerIds, emails);
   };
 
   const handleApproveAds = () => {
-    handleApprove(selectedCustomerIds);
+    handleApprove(selectedCustomerIds, emails);
   };
 
   const handleRejectAds = () => {
-    handleReject(selectedCustomerIds);
+    handleReject(selectedCustomerIds, emails);
   };
 
   const handleOpenEmail = () => {
@@ -188,7 +202,10 @@ const Featureadslist = ({
 
   const handleFeature = async (type, data) => {
     console.log(type, data);
-    let res = await removeFeatureAd({ id: data._id });
+    let res = await removeFeatureAd({
+      id: data._id,
+      email: data.contactDetails.email
+    });
     console.log(res);
     if (res.data.success === true) {
       toast.success(res.data.message, {
@@ -264,6 +281,7 @@ const Featureadslist = ({
         </button> */}
       </div>
       <Card {...rest}>
+        {console.log(emails)}
         <PerfectScrollbar>
           <Box sx={{ minWidth: 1050 }}>
             <Table>
@@ -309,7 +327,13 @@ const Featureadslist = ({
                       <TableCell padding="checkbox">
                         <Checkbox
                           checked={selectedCustomerIds.indexOf(ad._id) !== -1}
-                          onChange={event => handleSelectOne(event, ad._id)}
+                          onChange={event =>
+                            handleSelectOne(
+                              event,
+                              ad._id,
+                              ad.contactDetails.email
+                            )
+                          }
                           value="true"
                         />
                       </TableCell>

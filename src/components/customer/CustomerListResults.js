@@ -22,6 +22,8 @@ import {
 import getInitials from 'src/utils/getInitials';
 import CsvDownload from 'react-json-to-csv';
 import { Search as SearchIcon } from 'react-feather';
+import Emaildialog from './Emaildialog';
+import { emailSendMulti } from '../../Connection/Ads';
 
 const CustomerListResults = ({
   handleDelete,
@@ -34,6 +36,9 @@ const CustomerListResults = ({
   const [limit, setLimit] = useState(10);
   const [page, setPage] = useState(0);
   const [exportData, setExportData] = useState();
+  const [emails, setEmails] = useState([]);
+  const [email, setEmail] = useState('');
+  const [openEmail, setOpenEmail] = useState(false);
 
   const handleSelectAll = event => {
     let newSelectedCustomerIds;
@@ -47,7 +52,7 @@ const CustomerListResults = ({
     setSelectedCustomerIds(newSelectedCustomerIds);
   };
 
-  const handleSelectOne = (event, id) => {
+  const handleSelectOne = (event, id, email) => {
     const selectedIndex = selectedCustomerIds.indexOf(id);
     let newSelectedCustomerIds = [];
 
@@ -56,6 +61,7 @@ const CustomerListResults = ({
         selectedCustomerIds,
         id
       );
+      setEmails([...emails, email]);
     } else if (selectedIndex === 0) {
       newSelectedCustomerIds = newSelectedCustomerIds.concat(
         selectedCustomerIds.slice(1)
@@ -71,7 +77,39 @@ const CustomerListResults = ({
       );
     }
 
+    if (selectedIndex !== -1) {
+      console.log(selectedIndex);
+      console.log(email);
+      let yoo = emails;
+      yoo.splice(selectedIndex, 1);
+      console.log(yoo);
+      setEmails(yoo);
+    }
+
     setSelectedCustomerIds(newSelectedCustomerIds);
+  };
+
+  const handleOpenEmail = () => {
+    console.log(emails);
+    let email;
+    console.log('clicked');
+    setOpenEmail(!openEmail);
+  };
+
+  const handleEmailSendMulti = async data => {
+    handleOpenEmail();
+    console.log(data);
+    let res = await emailSendMulti(data);
+    console.log(res);
+    // if (res.data.success === true) {
+    //   toast.success(res.data.message, {
+    //     position: toast.POSITION.TOP_RIGHT
+    //   });
+    // } else {
+    //   toast.error(res.data.message, {
+    //     position: toast.POSITION.TOP_RIGHT
+    //   });
+    // }
   };
 
   const handleLimitChange = event => {
@@ -122,6 +160,13 @@ const CustomerListResults = ({
       {console.log(selectedCustomerIds)}
 
       <div className="d-flex justify-content-end">
+        <button
+          className="btn btn-success m-2"
+          disabled={selectedCustomerIds.length >= 1 ? false : true}
+          onClick={handleOpenEmail}
+        >
+          Send Email <i class="far fa-paper-plane"></i>
+        </button>
         <CsvDownload
           data={exportData}
           filename="exported Data.csv"
@@ -213,7 +258,7 @@ const CustomerListResults = ({
                             selectedCustomerIds.indexOf(customer._id) !== -1
                           }
                           onChange={event =>
-                            handleSelectOne(event, customer._id)
+                            handleSelectOne(event, customer._id, customer.email)
                           }
                           value="true"
                         />
@@ -271,6 +316,14 @@ const CustomerListResults = ({
           rowsPerPageOptions={[5, 10, 25]}
         /> */}
       </Card>
+      {openEmail && (
+        <Emaildialog
+          open={openEmail}
+          handleOpen={handleOpenEmail}
+          handleEmailSend={handleEmailSendMulti}
+          email={emails}
+        />
+      )}
     </div>
   );
 };

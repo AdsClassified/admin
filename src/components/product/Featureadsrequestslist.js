@@ -50,6 +50,7 @@ const Featureadsrequestslist = ({
   const [editAdData, setEditAdData] = useState();
   const [openEditAd, setOpenEditAd] = useState(false);
   const [openViewAd, setOpenViewAd] = useState(false);
+  const [emails, setEmails] = useState([]);
 
   const handleSelectAll = event => {
     let newSelectedCustomerIds;
@@ -63,7 +64,7 @@ const Featureadsrequestslist = ({
     setSelectedCustomerIds(newSelectedCustomerIds);
   };
 
-  const handleSelectOne = (event, id) => {
+  const handleSelectOne = (event, id, email) => {
     const selectedIndex = selectedCustomerIds.indexOf(id);
     let newSelectedCustomerIds = [];
 
@@ -72,6 +73,7 @@ const Featureadsrequestslist = ({
         selectedCustomerIds,
         id
       );
+      setEmails([...emails, email]);
     } else if (selectedIndex === 0) {
       newSelectedCustomerIds = newSelectedCustomerIds.concat(
         selectedCustomerIds.slice(1)
@@ -85,6 +87,15 @@ const Featureadsrequestslist = ({
         selectedCustomerIds.slice(0, selectedIndex),
         selectedCustomerIds.slice(selectedIndex + 1)
       );
+    }
+
+    if (selectedIndex !== -1) {
+      console.log(selectedIndex);
+      console.log(email);
+      let yoo = emails;
+      yoo.splice(selectedIndex, 1);
+      console.log(yoo);
+      setEmails(yoo);
     }
 
     setSelectedCustomerIds(newSelectedCustomerIds);
@@ -107,19 +118,19 @@ const Featureadsrequestslist = ({
   // };
 
   const handleActiveAds = () => {
-    handleActive(selectedCustomerIds);
+    handleActive(selectedCustomerIds, emails);
   };
 
   const handleDeActiveAds = () => {
-    handleDeActive(selectedCustomerIds);
+    handleDeActive(selectedCustomerIds, emails);
   };
 
   const handleApproveAds = () => {
-    handleApprove(selectedCustomerIds);
+    handleApprove(selectedCustomerIds, emails);
   };
 
   const handleRejectAds = () => {
-    handleReject(selectedCustomerIds);
+    handleReject(selectedCustomerIds, emails);
   };
 
   const handleOpenEmail = () => {
@@ -218,7 +229,7 @@ const Featureadsrequestslist = ({
   return (
     <div>
       {console.log(selectedCustomerIds)}
-
+      {console.log(emails)}
       <div className="d-flex justify-content-end">
         <button
           className="btn btn-success m-2"
@@ -322,7 +333,13 @@ const Featureadsrequestslist = ({
                       <TableCell padding="checkbox">
                         <Checkbox
                           checked={selectedCustomerIds.indexOf(ad._id) !== -1}
-                          onChange={event => handleSelectOne(event, ad._id)}
+                          onChange={event =>
+                            handleSelectOne(
+                              event,
+                              ad._id,
+                              ad.contactDetails.email
+                            )
+                          }
                           value="true"
                         />
                       </TableCell>

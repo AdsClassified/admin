@@ -50,6 +50,7 @@ const Adslist = ({
   const [editAdData, setEditAdData] = useState();
   const [openEditAd, setOpenEditAd] = useState(false);
   const [openViewAd, setOpenViewAd] = useState(false);
+  const [emails, setEmails] = useState([]);
 
   const handleSelectAll = event => {
     let newSelectedCustomerIds;
@@ -63,15 +64,18 @@ const Adslist = ({
     setSelectedCustomerIds(newSelectedCustomerIds);
   };
 
-  const handleSelectOne = (event, id) => {
+  const handleSelectOne = (event, id, email) => {
     const selectedIndex = selectedCustomerIds.indexOf(id);
+    console.log(selectedIndex);
     let newSelectedCustomerIds = [];
+    // console.log(email);
 
     if (selectedIndex === -1) {
       newSelectedCustomerIds = newSelectedCustomerIds.concat(
         selectedCustomerIds,
         id
       );
+      setEmails([...emails, email]);
     } else if (selectedIndex === 0) {
       newSelectedCustomerIds = newSelectedCustomerIds.concat(
         selectedCustomerIds.slice(1)
@@ -85,6 +89,15 @@ const Adslist = ({
         selectedCustomerIds.slice(0, selectedIndex),
         selectedCustomerIds.slice(selectedIndex + 1)
       );
+    }
+
+    if (selectedIndex !== -1) {
+      console.log(selectedIndex);
+      console.log(email);
+      let yoo = emails;
+      yoo.splice(selectedIndex, 1);
+      console.log(yoo);
+      setEmails(yoo);
     }
 
     setSelectedCustomerIds(newSelectedCustomerIds);
@@ -107,19 +120,19 @@ const Adslist = ({
   // };
 
   const handleActiveAds = () => {
-    handleActive(selectedCustomerIds);
+    handleActive(selectedCustomerIds, emails);
   };
 
   const handleDeActiveAds = () => {
-    handleDeActive(selectedCustomerIds);
+    handleDeActive(selectedCustomerIds, emails);
   };
 
   const handleApproveAds = () => {
-    handleApprove(selectedCustomerIds);
+    handleApprove(selectedCustomerIds, emails);
   };
 
   const handleRejectAds = () => {
-    handleReject(selectedCustomerIds);
+    handleReject(selectedCustomerIds, emails);
   };
 
   const handleOpenEmail = () => {
@@ -249,6 +262,7 @@ const Adslist = ({
         </button> */}
         </div>
         <Card {...rest}>
+          {console.log(emails)}
           <PerfectScrollbar>
             <Box sx={{ minWidth: 1050 }}>
               <Table>
@@ -290,10 +304,17 @@ const Adslist = ({
                         key={ad._id}
                         selected={selectedCustomerIds.indexOf(ad._id) !== -1}
                       >
+                        {console.log(ad)}
                         <TableCell padding="checkbox">
                           <Checkbox
                             checked={selectedCustomerIds.indexOf(ad._id) !== -1}
-                            onChange={event => handleSelectOne(event, ad._id)}
+                            onChange={event =>
+                              handleSelectOne(
+                                event,
+                                ad._id,
+                                ad.contactDetails.email
+                              )
+                            }
                             value="true"
                           />
                         </TableCell>

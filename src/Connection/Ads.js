@@ -1,6 +1,6 @@
 import axios from 'axios';
-let url = 'http://localhost:3001';
-// let url = 'https://adsbackendapp.herokuapp.com';
+// let url = 'http://localhost:3001';
+let url = 'https://adsbackendapp.herokuapp.com';
 
 const getAds = async () => {
   console.log('hello');
@@ -47,6 +47,13 @@ const deActiveAds = async data => {
 const emailSend = async data => {
   console.log(data);
   let res = await axios.post(`${url}/api/placead/sendemail`, data);
+  console.log(res);
+  return res;
+};
+
+const emailSendMulti = async data => {
+  console.log(data);
+  let res = await axios.post(`${url}/api/placead/sendemailmulti`, data);
   console.log(res);
   return res;
 };
@@ -149,5 +156,6 @@ export {
   countFeatureAds,
   adsStats,
   deleteFeatureAds,
-  getAdsApproval
+  getAdsApproval,
+  emailSendMulti
 };

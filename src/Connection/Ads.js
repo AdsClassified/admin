@@ -1,10 +1,17 @@
 import axios from 'axios';
-// let url = 'http://localhost:3001';
-let url = 'https://adsbackendapp.herokuapp.com';
+let url = 'http://localhost:3001';
+// let url = 'https://adsbackendapp.herokuapp.com';
 
 const getAds = async () => {
   console.log('hello');
   let res = await axios.get(`${url}/api/placead/getads`);
+  console.log(res);
+  return res;
+};
+
+const getImages = async data => {
+  console.log('hello');
+  let res = await axios.post(`${url}/api/placead/getimages`, data);
   console.log(res);
   return res;
 };
@@ -92,6 +99,23 @@ const getFeatureAds = async data => {
   return res;
 };
 
+const getFeatureImages = async data => {
+  console.log('hello');
+  let res = await axios.post(`${url}/api/placead/getfeatureimages`, data);
+  console.log(res);
+  return res;
+};
+
+const getFeatureRequestsImages = async data => {
+  console.log(data);
+  let res = await axios.post(
+    `${url}/api/placead/getfeaturerequestsimages`,
+    data
+  );
+  console.log(res);
+  return res;
+};
+
 const makeFeatureAd = async data => {
   console.log(data);
   let res = await axios.post(`${url}/api/placead/makefeaturead`, data);
@@ -139,6 +163,7 @@ const deleteFeatureAds = async data => {
 };
 export {
   getAds,
+  getImages,
   getAd,
   deleteAds,
   rejectAds,
@@ -157,5 +182,7 @@ export {
   adsStats,
   deleteFeatureAds,
   getAdsApproval,
-  emailSendMulti
+  emailSendMulti,
+  getFeatureImages,
+  getFeatureRequestsImages
 };

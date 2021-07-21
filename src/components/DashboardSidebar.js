@@ -20,7 +20,8 @@ import {
   User as UserIcon,
   UserPlus as UserPlusIcon,
   Users as UsersIcon,
-  List as ListIcon
+  List as ListIcon,
+  Layout as LayoutIcon
 } from 'react-feather';
 import NavItem from './NavItem';
 
@@ -65,6 +66,11 @@ const items = [
     href: '/app/categories',
     icon: ListIcon,
     title: 'Manage Categories'
+  },
+  {
+    href: '/app/popup',
+    icon: LayoutIcon,
+    title: 'Manage Popup'
   }
   // {
   //   href: '/app/settings',

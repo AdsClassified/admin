@@ -28,6 +28,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import Viewad from './Viewad';
 import Editad from './Editad';
 import Loader from '../Loader';
+import { getImages } from '../../Connection/Ads';
 
 const Adslist = ({
   handleDelete,
@@ -51,6 +52,9 @@ const Adslist = ({
   const [openEditAd, setOpenEditAd] = useState(false);
   const [openViewAd, setOpenViewAd] = useState(false);
   const [emails, setEmails] = useState([]);
+  const [updateImages, setUpdateImages] = useState(false);
+  const [adImages, setAdImages] = useState();
+  const [adImagesId, setAdImagesId] = useState();
 
   const handleSelectAll = event => {
     let newSelectedCustomerIds;
@@ -187,7 +191,14 @@ const Adslist = ({
   const handleViewAd = ad => {
     console.log(ad);
     setAdData(ad);
+    fetchImages(ad._id);
     handleOpenViewAd();
+  };
+
+  const fetchImages = async adId => {
+    let res = await getImages({ adId: adId });
+    console.log(res);
+    setAdImages(res.data.images[0].images);
   };
 
   const handleOpenEditAd = () => {
@@ -197,8 +208,11 @@ const Adslist = ({
   const handleEditAd = ad => {
     console.log(ad);
     setEditAdData(ad);
+
     handleOpenEditAd();
   };
+
+  const handleGetImages = () => {};
 
   return (
     <div>
@@ -288,7 +302,7 @@ const Adslist = ({
                     <TableCell>Ad Approved </TableCell>
                     <TableCell>Ad Rejected</TableCell>
                     <TableCell>location</TableCell>
-                    <TableCell>images</TableCell>
+                    {/* <TableCell>images</TableCell> */}
                     <TableCell>Contact Email</TableCell>
                     <TableCell>Contact Phone</TableCell>
                     <TableCell>Created At</TableCell>
@@ -325,9 +339,9 @@ const Adslist = ({
                               display: 'flex'
                             }}
                           >
-                            <Avatar src={ad.images[0]} sx={{ mr: 2 }}>
+                            {/* <Avatar src={ad.images[0]} sx={{ mr: 2 }}>
                               {getInitials(ad.title)}
-                            </Avatar>
+                            </Avatar> */}
                             <Typography color="textPrimary" variant="body1">
                               {ad.title}
                             </Typography>
@@ -350,7 +364,7 @@ const Adslist = ({
                           {ad.rejected ? 'Rejected' : 'Not Rejected'}
                         </TableCell>
                         <TableCell>{ad.location.address}</TableCell>
-                        <TableCell>{ad.images.length}</TableCell>
+                        {/* <TableCell>{ad.images.length}</TableCell> */}
                         <TableCell>{ad.contactDetails.email}</TableCell>
                         <TableCell>{ad.contactDetails.phone}</TableCell>
                         <TableCell>{ad.created}</TableCell>
@@ -430,8 +444,9 @@ const Adslist = ({
             email={email}
           />
         )}
-        {adData && (
+        {adData && adImages && (
           <Viewad
+            images={adImages}
             data={adData}
             open={openViewAd}
             handleOpen={handleOpenViewAd}

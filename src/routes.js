@@ -13,6 +13,7 @@ import Register from 'src/pages/Register';
 import Settings from 'src/pages/Settings';
 import Categories from './pages/Categories';
 import Adsapproval from './pages/Adsapproval';
+import Popup from './pages/Popup';
 
 export const Authroutes = [
   {
@@ -27,6 +28,7 @@ export const Authroutes = [
       { path: 'featureadsrequests', element: <Featureadsrequests /> },
       { path: 'featureads', element: <Featureads /> },
       { path: 'categories', element: <Categories /> },
+      { path: 'popup', element: <Popup /> },
       { path: 'settings', element: <Settings /> },
       { path: '/', element: <Navigate to="/app/dashboard" /> },
       { path: '*', element: <Navigate to="/404" /> }

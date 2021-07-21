@@ -12,7 +12,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
-import { editCategories } from '../../Connection/Categories';
+import { editPopup } from '../../Connection/Auth';
 import { ToastContainer, toast } from 'react-toastify';
 import Imagepicker from '../Imagepicker';
 
@@ -37,11 +37,10 @@ export default function Editcategory({
   const classes = useStyles();
   const [values, setValues] = useState({
     title: data.title,
-    subcategories: data.subcategories,
+    link: data.link,
     id: data._id,
-    icon: data.icon,
-    image: data.image,
-    newSubCategories: ''
+    description: data.description,
+    image: data.image
   });
 
   const handleChange = evt => {
@@ -50,6 +49,29 @@ export default function Editcategory({
       [evt.target.name]: evt.target.value
     });
   };
+
+  // const handleSubCategoryChange = (evt, id) => {
+  //   console.log(evt.target.value, id);
+
+  //   let newSubs = values.subcategories.map(sub => {
+  //     if (sub.id === id) {
+  //       console.log('iniFFFF');
+  //       let yoo = { subTitle: evt.target.value, id: id };
+  //       console.log(yoo);
+  //       return yoo;
+  //     } else {
+  //       console.log('in else');
+  //       return sub;
+  //     }
+  //   });
+
+  //   console.log(newSubs);
+
+  //   setValues({
+  //     ...values,
+  //     subcategories: newSubs
+  //   });
+  // };
 
   const handleSelectedImage = async image => {
     console.log(image);
@@ -60,33 +82,10 @@ export default function Editcategory({
     });
   };
 
-  const handleSubCategoryChange = (evt, id) => {
-    console.log(evt.target.value, id);
-
-    let newSubs = values.subcategories.map(sub => {
-      if (sub.id === id) {
-        console.log('iniFFFF');
-        let yoo = { subTitle: evt.target.value, id: id };
-        console.log(yoo);
-        return yoo;
-      } else {
-        console.log('in else');
-        return sub;
-      }
-    });
-
-    console.log(newSubs);
-
-    setValues({
-      ...values,
-      subcategories: newSubs
-    });
-  };
-
   const handleEditSubmit = async () => {
     console.log(values);
     handleClose();
-    let res = await editCategories(values);
+    let res = await editPopup(values);
     if (res.data.success === true) {
       toast.success(res.data.message, {
         position: toast.POSITION.TOP_RIGHT
@@ -110,14 +109,14 @@ export default function Editcategory({
         onClose={handleOpen}
         aria-labelledby="form-dialog-title"
       >
-        <DialogTitle id="form-dialog-title">Edit Category</DialogTitle>
+        <DialogTitle id="form-dialog-title">Edit Popup</DialogTitle>
         <DialogContent>
-          <DialogContentText>Edit Category Details</DialogContentText>
+          <DialogContentText>Edit Popup Details</DialogContentText>
           <TextField
             autoFocus
             margin="dense"
             id="name"
-            label="Category Title"
+            label="Popup Title"
             type="text"
             fullWidth
             variant="outlined"
@@ -125,44 +124,43 @@ export default function Editcategory({
             name="title"
             onChange={handleChange}
           />
-          {values.subcategories.map(sub => (
-            <TextField
-              autoFocus
-              margin="dense"
-              id="name"
-              name="subcategories"
-              value={sub.subTitle}
-              onChange={e => handleSubCategoryChange(e, sub.id)}
-              label="Sub Categories Titles"
-              placeholder="Seprate them by commas"
-              type="text"
-              fullWidth
-            />
-          ))}
+          <TextField
+            autoFocus
+            margin="dense"
+            id="name"
+            name="link"
+            value={values.link}
+            onChange={handleChange}
+            label="Link"
+            // placeholder="Seprate them by commas"
+            type="text"
+            fullWidth
+          />
+
           <TextField
             autoFocus
             margin="dense"
             id="name"
             name="newSubCategories"
-            value={values.newSubCategories}
+            value={values.description}
             onChange={handleChange}
-            label="New Sub Categories Titles"
-            placeholder="Seprate them by commas"
+            label="Description"
+            // placeholder="Seprate them by commas"
             type="text"
             fullWidth
           />
-          <TextField
+          {/* <TextField
             autoFocus
             margin="dense"
             id="name"
             name="icon"
-            value={values.icon}
+            value={values.}
             onChange={handleChange}
             label="Add Icon code"
             placeholder="Only add Font Awesome Icon Class Code"
             type="text"
             fullWidth
-          />
+          /> */}
           {/* <TextField
             autoFocus
             margin="dense"
@@ -175,7 +173,6 @@ export default function Editcategory({
             type="text"
             fullWidth
           /> */}
-
           <div>
             <br />
             {values.image && (

@@ -1,0 +1,19 @@
+/* .applycolor {
+    color: #ff6e14;
+  } */
+
+/* .imgcontainersearchcard {
+  position: relative;
+} */
+
+.imgstyle {
+  /* display: initial; */
+  /* position: absolute; */
+  inset: 0px;
+  margin: auto;
+  width: 100%;
+  height: 400px;
+  object-fit: cover;
+  object-position: center center;
+  border-radius: 12px;
+}

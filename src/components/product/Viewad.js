@@ -17,6 +17,7 @@ import Avatarimage from '../Avatarimage';
 // import { getAd } from "../Connection/Placead";
 import { Link } from 'react-router-dom';
 import Showadmap from './Showadmap';
+// import { getImages } from '../../Connection/Ads';
 
 const useStyles = makeStyles(theme => ({
   appBar: {
@@ -32,9 +33,10 @@ const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-export default function Viewad({ open, handleOpen, data }) {
+export default function Viewad({ open, handleOpen, data, images }) {
   const classes = useStyles();
   const [seeNumber, setSeeNumber] = useState(false);
+  // const [images, setImages] = useState();
   //   const [data, setData] = useState();
 
   const handleSeeNumber = () => {
@@ -58,9 +60,20 @@ export default function Viewad({ open, handleOpen, data }) {
   //     }
   //   }, [location.state]);
 
+  // useEffect(() => {
+  //   const fetchImages = async () => {
+  //     let res = await getImages({ adId: data._id });
+  //     console.log(res);
+  //     setImages(res.data.images[0].images);
+  //     // setFilterImages(res.data.images);
+  //     // setLoading(false);
+  //   };
+  //   fetchImages();
+  // }, []);
+
   return (
     <div>
-      {console.log(data)}
+      {console.log(images)}
       <Dialog
         fullScreen
         open={open}
@@ -95,7 +108,8 @@ export default function Viewad({ open, handleOpen, data }) {
               {data && (
                 <div className="row mx-2">
                   <div className="col-12 col-md-8 col-lg-7 text-left">
-                    <Carousal image={data.images} />
+                    {images && <Carousal image={images} />}
+
                     <br />
                     <h1>{data.title}</h1>
                     <h3 className="mt-3">{data.price}</h3>

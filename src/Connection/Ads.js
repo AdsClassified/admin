@@ -1,6 +1,6 @@
 import axios from 'axios';
-let url = 'http://localhost:3001';
-// let url = 'https://adsbackendapp.herokuapp.com';
+// let url = 'http://localhost:3001';
+let url = 'https://adsbackendapp.herokuapp.com';
 
 const getAds = async () => {
   console.log('hello');

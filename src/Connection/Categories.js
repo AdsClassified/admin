@@ -1,6 +1,6 @@
 import axios from 'axios';
 // let url = 'http://localhost:3001';
-let url = 'https://adsbackendapp.herokuapp.com';
+let url = 'https://adsbackendapi.herokuapp.com';
 
 const getCategories = async () => {
   console.log('hello');
